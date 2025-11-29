@@ -65,7 +65,7 @@ export const projects: Project[] = [
         category: "Infrastructure",
         shortDescription: "Civil Engineering • Maintenance",
         description: "Rehabilitation and strengthening of a critical river crossing bridge, ensuring continued service while upgrading to modern safety standards.",
-        image: "https://images.unsplash.com/photo-1558402347-1736bb7f512c?q=80&w=2070&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1734888369524-bd915004d0c3?w=800&q=80",
         stats: [
             { label: "Span Length", value: "120m" },
             { label: "Load Capacity", value: "40T" },
@@ -97,7 +97,7 @@ export const projects: Project[] = [
         category: "Industrial",
         shortDescription: "Portal Frame • Cladding",
         description: "Design and construction of a 50,000 sq ft warehouse expansion featuring clear-span portal frames and advanced cladding systems for a major logistics operator.",
-        image: "https://images.unsplash.com/photo-1565610222536-ef125c59da2c?q=80&w=2070&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=800&q=80",
         stats: [
             { label: "Floor Area", value: "50,000 sq ft" },
             { label: "Clear Height", value: "12m" },

@@ -70,8 +70,8 @@ export default function Home() {
                 Available for Q4 Projects
               </div>
               <h1 className="text-5xl md:text-7xl font-semibold text-slate-900 leading-[1.05] tracking-tight mb-8">
-                Engineering Excellence in <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-700">Every Project.</span>
+                Precision in <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-700">Every Structure.</span>
               </h1>
               <p className="text-lg md:text-xl text-slate-500 mb-10 max-w-lg font-normal leading-relaxed">
                 Amistad Engineering Services delivers comprehensive engineering solutions in Qatar. From precision design to expert execution.
@@ -87,9 +87,9 @@ export default function Home() {
               </div>
 
               <div className="mt-12 pt-8 border-t border-slate-200 flex items-center gap-8 opacity-70">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png" className="h-6 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Client Logo" />
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png" className="h-6 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Client Logo" />
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/IBM_logo.svg/2560px-IBM_logo.svg.png" className="h-5 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Client Logo" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/QatarEnergy_logo.svg" className="h-12 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="QatarEnergy" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Qatar_Rail_logo.svg" className="h-10 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Qatar Rail" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Qatar_foundation_logo.PNG" className="h-12 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Qatar Foundation" />
               </div>
             </div>
 
