@@ -1,8 +1,40 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { projects } from "@/data/projects";
+import type { Project } from "@/data/projects";
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const [imageError, setImageError] = useState(false);
+  
+  // Hide the entire card if image fails to load
+  if (imageError) {
+    return null;
+  }
+  
+  return (
+    <Link
+      href={`/projects/${project.id}`}
+      className={`group cursor-pointer reveal ${index === 1 ? 'delay-100' : index === 2 ? 'delay-200' : ''}`}
+    >
+      <div className="overflow-hidden rounded-lg mb-4 relative h-64">
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10"></div>
+        <img 
+          src={project.image} 
+          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+          alt={project.title}
+          onError={() => setImageError(true)}
+        />
+        <div className="absolute bottom-4 left-4 z-20">
+          <span className="bg-white/90 backdrop-blur text-xs font-semibold px-2 py-1 rounded text-slate-900">{project.category}</span>
+        </div>
+      </div>
+      <h3 className="text-lg font-semibold text-slate-900 mb-1 group-hover:text-teal-700 transition-colors">{project.title}</h3>
+      <p className="text-sm text-slate-500">{project.shortDescription}</p>
+    </Link>
+  );
+}
 
 export default function Home() {
   useEffect(() => {
@@ -37,7 +69,7 @@ export default function Home() {
       <nav className="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse group">
-            <img src="/amistad_logo.png" alt="Amistad Engineering Services" className="h-10 transition-transform group-hover:scale-105 duration-300" />
+            <img src="/amistad_logo.png" alt="Amistad Contracting and Services" className="h-10 transition-transform group-hover:scale-105 duration-300" />
           </a>
 
           {/* Desktop Menu */}
@@ -74,7 +106,7 @@ export default function Home() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-700">Every Structure.</span>
               </h1>
               <p className="text-lg md:text-xl text-slate-500 mb-10 max-w-lg font-normal leading-relaxed">
-                Amistad Engineering Services delivers comprehensive engineering solutions in Qatar. From precision design to expert execution.
+                Amistad Contracting and Services delivers comprehensive engineering solutions in Qatar. From precision design to expert execution.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -102,7 +134,7 @@ export default function Home() {
                   <div className="flex justify-between items-end">
                     <div>
                       <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Project ID</div>
-                      <div className="font-mono text-teal-500">SC-2024-884</div>
+                      <div className="font-mono text-teal-500">SC-2025-884</div>
                     </div>
                     <div className="text-right">
                       <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Load Capacity</div>
@@ -340,21 +372,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <Link
-                key={project.id}
-                href={`/projects/${project.id}`}
-                className={`group cursor-pointer reveal ${index === 1 ? 'delay-100' : index === 2 ? 'delay-200' : ''}`}
-              >
-                <div className="overflow-hidden rounded-lg mb-4 relative h-64">
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10"></div>
-                  <img src={project.image} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" alt={project.title} />
-                  <div className="absolute bottom-4 left-4 z-20">
-                    <span className="bg-white/90 backdrop-blur text-xs font-semibold px-2 py-1 rounded text-slate-900">{project.category}</span>
-                  </div>
-                </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-1 group-hover:text-teal-700 transition-colors">{project.title}</h3>
-                <p className="text-sm text-slate-500">{project.shortDescription}</p>
-              </Link>
+              <ProjectCard key={project.id} project={project} index={index} />
             ))}
           </div>
         </div>
@@ -481,10 +499,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-1">
               <a href="#" className="flex items-center space-x-2 mb-6">
-                <img src="/amistad_logo.png" alt="Amistad Engineering Services" className="h-8" />
+                <img src="/amistad_logo.png" alt="Amistad Contracting and Services" className="h-8" />
               </a>
               <p className="text-sm text-slate-500 leading-relaxed">
-                Amistad Engineering Services - Excellence in engineering solutions since 2020. Based in Doha, Qatar.
+                Amistad Contracting and Services - Excellence in engineering solutions since 2020. Based in Doha, Qatar.
               </p>
             </div>
             <div>
@@ -514,7 +532,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-slate-100 pt-8 flex justify-between items-center">
-            <p className="text-slate-400 text-xs">© 2024 Amistad Engineering Services. All rights reserved.</p>
+            <p className="text-slate-400 text-xs">© 2025 Amistad Contracting and Services. All rights reserved.</p>
           </div>
         </div>
       </footer>

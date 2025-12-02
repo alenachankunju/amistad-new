@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Amistad Engineering Services | Engineering Solutions in Doha, Qatar",
-  description: "Amistad Engineering Services - Professional engineering solutions in Doha, Qatar. Expert design, fabrication, and installation services.",
+  title: "Amistad Contracting and Services | Engineering Solutions in Doha, Qatar",
+  description: "Amistad Contracting and Services - Professional engineering solutions in Doha, Qatar. Expert design, fabrication, and installation services.",
   icons: {
     icon: '/favicon.svg',
   },

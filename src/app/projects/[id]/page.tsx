@@ -1,13 +1,32 @@
 "use client";
 
-import { use, useEffect } from "react";
+import { use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getProjectById } from "@/data/projects";
 
+function GalleryImage({ src, alt }: { src: string; alt: string }) {
+    const [imageError, setImageError] = useState(false);
+    
+    if (imageError) return null;
+    
+    return (
+        <div className="relative aspect-[4/3] rounded-lg overflow-hidden group">
+            <img
+                src={src}
+                alt={alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                onError={() => setImageError(true)}
+            />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+        </div>
+    );
+}
+
 export default function ProjectDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
     const project = getProjectById(id);
+    const [heroImageError, setHeroImageError] = useState(false);
 
     useEffect(() => {
         // @ts-ignore
@@ -27,7 +46,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
             <nav className="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
                 <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
                     <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse group">
-                        <img src="/amistad_logo.png" alt="Amistad Engineering Services" className="h-10 transition-transform group-hover:scale-105 duration-300" />
+                        <img src="/amistad_logo.png" alt="Amistad Contracting and Services" className="h-10 transition-transform group-hover:scale-105 duration-300" />
                     </Link>
 
                     <Link href="/#projects" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-2">
@@ -39,10 +58,20 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
 
             {/* Hero Section */}
             <section className="relative pt-32 pb-20 overflow-hidden bg-slate-900">
-                <div className="absolute inset-0">
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-40" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900"></div>
-                </div>
+                {!heroImageError && (
+                    <div className="absolute inset-0">
+                        <img 
+                            src={project.image} 
+                            alt={project.title} 
+                            className="w-full h-full object-cover opacity-40"
+                            onError={() => setHeroImageError(true)}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900"></div>
+                    </div>
+                )}
+                {heroImageError && (
+                    <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-900"></div>
+                )}
 
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="max-w-4xl">
@@ -159,14 +188,11 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
                         <h2 className="text-3xl font-semibold text-slate-900 mb-8">Project Gallery</h2>
                         <div className="grid md:grid-cols-2 gap-6">
                             {project.gallery.map((image, index) => (
-                                <div key={index} className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-                                    <img
-                                        src={image}
-                                        alt={`${project.title} - Image ${index + 1}`}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
-                                </div>
+                                <GalleryImage 
+                                    key={index}
+                                    src={image}
+                                    alt={`${project.title} - Image ${index + 1}`}
+                                />
                             ))}
                         </div>
                     </div>
@@ -194,7 +220,7 @@ export default function ProjectDetailPage({ params }: { params: Promise<{ id: st
             <footer className="bg-white border-t border-slate-200 py-8">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="flex justify-center items-center">
-                        <p className="text-slate-400 text-sm">© 2024 Amistad Engineering Services. All rights reserved.</p>
+                        <p className="text-slate-400 text-sm">© 2025 Amistad Contracting and Services. All rights reserved.</p>
                     </div>
                 </div>
             </footer>
