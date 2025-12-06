@@ -7,12 +7,12 @@ import type { Project } from "@/data/projects";
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [imageError, setImageError] = useState(false);
-  
+
   // Hide the entire card if image fails to load
   if (imageError) {
     return null;
   }
-  
+
   return (
     <Link
       href={`/projects/${project.id}`}
@@ -20,9 +20,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <div className="overflow-hidden rounded-lg mb-4 relative h-64">
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10"></div>
-        <img 
-          src={project.image} 
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" 
+        <img
+          src={project.image}
+          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
           alt={project.title}
           onError={() => setImageError(true)}
         />
@@ -38,9 +38,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 export default function Home() {
   useEffect(() => {
-    // @ts-ignore
+    // @ts-expect-error - known issue with this specific type definition
     if (typeof window !== "undefined" && window.lucide) {
-      // @ts-ignore
+      // @ts-expect-error - known issue with this specific type definition
       window.lucide.createIcons();
     }
 
@@ -280,7 +280,7 @@ export default function Home() {
                 <h3 className="text-2xl font-semibold text-slate-900">Site Installation & Rigging</h3>
               </div>
               <p className="text-lg text-slate-500 mb-8 leading-relaxed">
-                We don't just build it; we erect it. Our certified rigging teams manage the logistics, crane lifts, and on-site assembly, ensuring safety and timeline adherence.
+                We don&apos;t just build it; we erect it. Our certified rigging teams manage the logistics, crane lifts, and on-site assembly, ensuring safety and timeline adherence.
               </p>
               <ul className="space-y-4">
                 <li className="flex items-center p-4 bg-slate-50 rounded border border-slate-100">
@@ -386,7 +386,7 @@ export default function Home() {
           <div className="w-full lg:w-1/3 bg-slate-50 border-r border-slate-200 p-12 lg:p-20 flex flex-col justify-between">
             <div>
               <span className="text-teal-700 font-semibold tracking-wider uppercase text-xs mb-6 block">Get in Touch</span>
-              <h2 className="text-4xl font-semibold text-slate-900 mb-8 tracking-tight">Let's build something together.</h2>
+              <h2 className="text-4xl font-semibold text-slate-900 mb-8 tracking-tight">Let&apos;s build something together.</h2>
               <p className="text-slate-600 mb-12 leading-relaxed">
                 Our engineering team is ready to discuss your project requirements. We typically respond within 24 hours.
               </p>
@@ -532,7 +532,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-slate-100 pt-8 flex justify-between items-center">
-            <p className="text-slate-400 text-xs">© 2025 Amistad Contracting and Services. All rights reserved.</p>
+            <p className="text-gray-400 text-sm">© {new Date().getFullYear()} Amistad. All rights reserved. Qatar&apos;s Premier Construction Partner.</p>
           </div>
         </div>
       </footer>
