@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { projects } from '@/data/projects'
+import { getAllBlogPosts, BlogPost } from '@/data/insights';
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://amistadgeneral.net'
@@ -11,6 +12,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '#process',
         '#projects',
         '#contact',
+        '/services/structural-steel',
+        '/services/metal-works',
+        '/services/installation',
+        '/insights',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: new Date(),
@@ -26,5 +31,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.7,
     }))
 
-    return [...routes, ...projectRoutes]
+    // Dynamic blog routes
+    const blogPosts = getAllBlogPosts();
+    const blogRoutes = blogPosts.map((post: BlogPost) => ({
+        url: `${baseUrl}/insights/${post.slug}`,
+        lastModified: new Date(post.date),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+    }))
+
+    return [...routes, ...projectRoutes, ...blogRoutes]
 }

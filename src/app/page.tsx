@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 
@@ -20,10 +21,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     >
       <div className="overflow-hidden rounded-lg mb-4 relative h-64">
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors z-10"></div>
-        <img
+        <Image
           src={project.image}
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+          className="object-cover transform group-hover:scale-110 transition-transform duration-700"
           alt={project.title}
+          fill
           onError={() => setImageError(true)}
         />
         <div className="absolute bottom-4 left-4 z-20">
@@ -69,7 +71,7 @@ export default function Home() {
       <nav className="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
           <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse group">
-            <img src="/amistad_logo.png" alt="Amistad Contracting and Services" className="h-10 transition-transform group-hover:scale-105 duration-300" />
+            <Image src="/amistad_logo.png" alt="Amistad Contracting and Services" width={150} height={40} className="h-10 w-auto transition-transform group-hover:scale-105 duration-300" />
           </a>
 
           {/* Desktop Menu */}
@@ -119,16 +121,16 @@ export default function Home() {
               </div>
 
               <div className="mt-12 pt-8 border-t border-slate-200 flex items-center gap-8 opacity-70">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/QatarEnergy_logo.svg" className="h-12 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="QatarEnergy" />
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Qatar_Rail_logo.svg" className="h-10 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Qatar Rail" />
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Qatar_foundation_logo.PNG" className="h-12 grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Qatar Foundation" />
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/8/88/QatarEnergy_logo.svg" width={100} height={48} className="h-12 w-auto grayscale opacity-50 hover:opacity-100 transition-opacity" alt="QatarEnergy" />
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Qatar_Rail_logo.svg" width={100} height={40} className="h-10 w-auto grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Qatar Rail" />
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Qatar_foundation_logo.PNG" width={100} height={48} className="h-12 w-auto grayscale opacity-50 hover:opacity-100 transition-opacity" alt="Qatar Foundation" />
               </div>
             </div>
 
             <div className="relative reveal delay-100 lg:h-[600px] w-full">
               {/* Composition of images for technical feel */}
               <div className="absolute top-0 right-0 w-4/5 h-4/5 bg-slate-900 rounded-sm overflow-hidden shadow-2xl z-10">
-                <img src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=1997&auto=format&fit=crop" className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700" alt="Steel Structure" />
+                <Image src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=1997&auto=format&fit=crop" fill className="object-cover opacity-90 hover:scale-105 transition-transform duration-700" alt="Steel Structure" />
                 {/* Overlay Tech Data */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
                   <div className="flex justify-between items-end">
@@ -177,7 +179,7 @@ export default function Home() {
           <div className="grid md:grid-cols-12 gap-12 mb-24 items-center reveal">
             <div className="md:col-span-5 order-2 md:order-1">
               <div className="relative aspect-square md:aspect-[4/5] bg-slate-100 rounded-sm overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1000&auto=format&fit=crop" className="w-full h-full object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="CAD Design" />
+                <Image src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1000&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="CAD Design" />
                 <div className="absolute inset-0 border border-black/5"></div>
               </div>
             </div>
@@ -260,7 +262,7 @@ export default function Home() {
             </div>
             <div className="md:col-span-5">
               <div className="relative aspect-square md:aspect-[4/5] bg-slate-100 rounded-sm overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Welding" />
+                <Image src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Welding" />
                 <div className="absolute inset-0 border border-black/5"></div>
               </div>
             </div>
@@ -270,7 +272,7 @@ export default function Home() {
           <div className="grid md:grid-cols-12 gap-12 items-center reveal">
             <div className="md:col-span-5 order-2 md:order-1">
               <div className="relative aspect-square md:aspect-[4/5] bg-slate-100 rounded-sm overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Construction Site" />
+                <Image src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Construction Site" />
                 <div className="absolute inset-0 border border-black/5"></div>
               </div>
             </div>
@@ -499,7 +501,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-1">
               <a href="#" className="flex items-center space-x-2 mb-6">
-                <img src="/amistad_logo.png" alt="Amistad Contracting and Services" className="h-8" />
+                <Image src="/amistad_logo.png" alt="Amistad Contracting and Services" width={120} height={32} className="h-8 w-auto" />
               </a>
               <p className="text-sm text-slate-500 leading-relaxed">
                 Amistad Contracting and Services - Excellence in engineering solutions since 2020. Based in Doha, Qatar.
@@ -532,7 +534,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-slate-100 pt-8 flex justify-between items-center">
-            <p className="text-gray-400 text-sm">© {new Date().getFullYear()} Amistad. All rights reserved. Qatar&apos;s Premier Construction Partner.</p>
+            <p className="text-gray-400 text-sm">© {new Date().getFullYear()} Amistad Contracting and Services. All rights reserved.</p>
           </div>
         </div>
       </footer>

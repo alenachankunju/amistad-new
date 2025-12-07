@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Project } from "@/data/projects";
 
 function GalleryImage({ src, alt }: { src: string; alt: string }) {
@@ -11,10 +12,11 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
 
     return (
         <div className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-            <img
+            <Image
                 src={src}
                 alt={alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                fill
                 onError={() => setImageError(true)}
             />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
@@ -39,7 +41,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             <nav className="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
                 <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
                     <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse group">
-                        <img src="/amistad_logo.png" alt="Amistad Contracting and Services" className="h-10 transition-transform group-hover:scale-105 duration-300" />
+                        <Image src="/amistad_logo.png" alt="Amistad Contracting and Services" width={150} height={40} className="h-10 w-auto transition-transform group-hover:scale-105 duration-300" />
                     </Link>
 
                     <Link href="/#projects" className="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors flex items-center gap-2">
@@ -53,10 +55,11 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             <section className="relative pt-32 pb-20 overflow-hidden bg-slate-900">
                 {!heroImageError && (
                     <div className="absolute inset-0">
-                        <img
+                        <Image
                             src={project.image}
                             alt={project.title}
-                            className="w-full h-full object-cover opacity-40"
+                            className="object-cover opacity-40"
+                            fill
                             onError={() => setHeroImageError(true)}
                         />
                         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900"></div>
