@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 
@@ -39,12 +40,32 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 }
 
 export default function Home() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    service: 'Structural Steel Fabrication',
+    message: '',
+    subscribeToNewsletter: false,
+  });
+  const [formStatus, setFormStatus] = useState<{
+    type: 'idle' | 'loading' | 'success' | 'error';
+    message: string;
+  }>({ type: 'idle', message: '' });
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+
   useEffect(() => {
-    // @ts-expect-error - known issue with this specific type definition
-    if (typeof window !== "undefined" && window.lucide) {
+    // Initialize Lucide icons for data-lucide attributes (only on mount)
+    const initIcons = () => {
       // @ts-expect-error - known issue with this specific type definition
-      window.lucide.createIcons();
-    }
+      if (typeof window !== "undefined" && window.lucide) {
+        // @ts-expect-error - known issue with this specific type definition
+        window.lucide.createIcons();
+      }
+    };
+
+    // Use setTimeout to ensure DOM is ready
+    const timer = setTimeout(initIcons, 0);
 
     const observerOptions = {
       root: null,
@@ -63,7 +84,127 @@ export default function Home() {
     document.querySelectorAll('.reveal').forEach(el => {
       observer.observe(el);
     });
-  }, []);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []); // Only run on mount
+
+  // Separate effect to update icons when form status changes (with delay)
+  useEffect(() => {
+    if (formStatus.type === 'idle') return;
+
+    const timer = setTimeout(() => {
+      // @ts-expect-error - known issue with this specific type definition
+      if (typeof window !== "undefined" && window.lucide) {
+        // @ts-expect-error - known issue with this specific type definition
+        window.lucide.createIcons();
+      }
+    }, 100); // Small delay to let React finish DOM updates
+
+    return () => clearTimeout(timer);
+  }, [formStatus.type]);
+
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+
+    if (!formData.firstName.trim()) {
+      errors.firstName = 'First name is required';
+    }
+
+    if (!formData.lastName.trim()) {
+      errors.lastName = 'Last name is required';
+    }
+
+    if (!formData.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!formData.service) {
+      errors.service = 'Please select a service';
+    }
+
+    if (!formData.message.trim()) {
+      errors.message = 'Project details are required';
+    } else if (formData.message.trim().length < 10) {
+      errors.message = 'Please provide more details about your project (at least 10 characters)';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      setFormStatus({ type: 'error', message: 'Please fix the errors in the form.' });
+      return;
+    }
+
+    setFormStatus({ type: 'loading', message: 'Sending your message...' });
+    setFormErrors({});
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      setFormStatus({ type: 'success', message: data.message || 'Thank you! Your message has been sent successfully.' });
+      
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        service: 'Structural Steel Fabrication',
+        message: '',
+        subscribeToNewsletter: false,
+      });
+
+      // Reset status after 5 seconds
+      setTimeout(() => {
+        setFormStatus({ type: 'idle', message: '' });
+      }, 5000);
+    } catch (error) {
+      setFormStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'An error occurred. Please try again later.',
+      });
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+
+    // Clear error for this field when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
 
   return (
     <>
@@ -437,27 +578,93 @@ export default function Home() {
           {/* Contact Form (Right) */}
           <div className="w-full lg:w-2/3 bg-white p-12 lg:p-24 flex items-center">
             <div className="w-full max-w-xl mx-auto reveal">
-              <form action="#" className="space-y-8">
+              {/* Status Messages */}
+              {formStatus.type === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <p className="text-sm font-medium text-green-800">{formStatus.message}</p>
+                  </div>
+                </div>
+              )}
+
+              {formStatus.type === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                  <div className="flex items-center gap-2">
+                    <AlertCircle className="w-5 h-5 text-red-600" />
+                    <p className="text-sm font-medium text-red-800">{formStatus.message}</p>
+                  </div>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-8">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="relative">
-                    <label htmlFor="first-name" className="block text-sm font-medium text-slate-700 mb-2">First Name</label>
-                    <input type="text" id="first-name" className="block w-full rounded-md border-slate-200 shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 placeholder-slate-400 transition-all outline-none" placeholder="Jane" />
+                    <label htmlFor="firstName" className="block text-sm font-medium text-slate-700 mb-2">First Name</label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className={`block w-full rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 placeholder-slate-400 transition-all outline-none ${
+                        formErrors.firstName ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200'
+                      }`}
+                      placeholder="Jane"
+                    />
+                    {formErrors.firstName && (
+                      <p className="mt-1 text-sm text-red-600">{formErrors.firstName}</p>
+                    )}
                   </div>
                   <div className="relative">
-                    <label htmlFor="last-name" className="block text-sm font-medium text-slate-700 mb-2">Last Name</label>
-                    <input type="text" id="last-name" className="block w-full rounded-md border-slate-200 shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 placeholder-slate-400 transition-all outline-none" placeholder="Doe" />
+                    <label htmlFor="lastName" className="block text-sm font-medium text-slate-700 mb-2">Last Name</label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className={`block w-full rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 placeholder-slate-400 transition-all outline-none ${
+                        formErrors.lastName ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200'
+                      }`}
+                      placeholder="Doe"
+                    />
+                    {formErrors.lastName && (
+                      <p className="mt-1 text-sm text-red-600">{formErrors.lastName}</p>
+                    )}
                   </div>
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">Work Email</label>
-                  <input type="email" id="email" className="block w-full rounded-md border-slate-200 shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 placeholder-slate-400 transition-all outline-none" placeholder="jane@company.com" />
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className={`block w-full rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 placeholder-slate-400 transition-all outline-none ${
+                      formErrors.email ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200'
+                    }`}
+                    placeholder="jane@company.com"
+                  />
+                  {formErrors.email && (
+                    <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                  )}
                 </div>
 
                 <div>
                   <label htmlFor="service" className="block text-sm font-medium text-slate-700 mb-2">Service Required</label>
                   <div className="relative">
-                    <select id="service" className="block w-full appearance-none rounded-md border-slate-200 shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 transition-all outline-none">
+                    <select
+                      id="service"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
+                      className={`block w-full appearance-none rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 transition-all outline-none ${
+                        formErrors.service ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200'
+                      }`}
+                    >
                       <option>Structural Steel Fabrication</option>
                       <option>Architectural Metalwork</option>
                       <option>On-site Installation</option>
@@ -467,26 +674,60 @@ export default function Home() {
                       <i data-lucide="chevron-down" className="w-4 h-4"></i>
                     </div>
                   </div>
+                  {formErrors.service && (
+                    <p className="mt-1 text-sm text-red-600">{formErrors.service}</p>
+                  )}
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-2">Project Details</label>
-                  <textarea id="message" rows={4} className="block w-full rounded-md border-slate-200 shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 placeholder-slate-400 transition-all outline-none" placeholder="Please describe your project scope, location, and timeline..."></textarea>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    className={`block w-full rounded-md shadow-sm focus:border-teal-500 focus:ring-teal-500/20 bg-slate-50 border px-4 py-3 text-slate-900 placeholder-slate-400 transition-all outline-none ${
+                      formErrors.message ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-200'
+                    }`}
+                    placeholder="Please describe your project scope, location, and timeline..."
+                  />
+                  {formErrors.message && (
+                    <p className="mt-1 text-sm text-red-600">{formErrors.message}</p>
+                  )}
                 </div>
 
                 <div className="flex items-start">
                   <div className="flex h-6 items-center">
-                    <input id="offers" type="checkbox" className="h-4 w-4 rounded border-slate-300 text-teal-700 focus:ring-teal-700" />
+                    <input
+                      id="subscribeToNewsletter"
+                      name="subscribeToNewsletter"
+                      type="checkbox"
+                      checked={formData.subscribeToNewsletter}
+                      onChange={handleChange}
+                      className="h-4 w-4 rounded border-slate-300 text-teal-700 focus:ring-teal-700"
+                    />
                   </div>
                   <div className="ml-3 text-sm leading-6">
-                    <label htmlFor="offers" className="font-medium text-slate-700">Subscribe to newsletter</label>
+                    <label htmlFor="subscribeToNewsletter" className="font-medium text-slate-700">Subscribe to newsletter</label>
                     <p className="text-slate-500">Get updates on our latest projects and industry news.</p>
                   </div>
                 </div>
 
                 <div className="pt-4">
-                  <button type="submit" className="w-full md:w-auto flex justify-center items-center px-8 py-4 border border-transparent text-sm font-medium rounded-md text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                    Send Request
+                  <button
+                    type="submit"
+                    disabled={formStatus.type === 'loading'}
+                    className="w-full md:w-auto flex justify-center items-center px-8 py-4 border border-transparent text-sm font-medium rounded-md text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                  >
+                    {formStatus.type === 'loading' ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      'Send Request'
+                    )}
                   </button>
                 </div>
               </form>
