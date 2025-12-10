@@ -310,7 +310,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">Technical Services</h2>
             </div>
             <div className="mt-6 md:mt-0">
-              <a href="#contact" className="text-sm font-medium text-slate-500 hover:text-teal-700 transition-colors flex items-center gap-2">
+              <a href="/Amistad%20contracting%20%26%20services.pdf" download="Amistad contracting & services.pdf" className="text-sm font-medium text-slate-500 hover:text-teal-700 transition-colors flex items-center gap-2">
                 Download Full Service Catalog <i data-lucide="download" className="w-4 h-4"></i>
               </a>
             </div>
@@ -760,9 +760,9 @@ export default function Home() {
             <div>
               <h3 className="font-semibold text-slate-900 mb-4 text-sm uppercase tracking-wide">Legal</h3>
               <ul className="space-y-3 text-sm text-slate-500">
-                <li><a href="#" className="hover:text-slate-900 transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-slate-900 transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-slate-900 transition-colors">Cookie Policy</a></li>
+                <li><a href="/privacy-policy" className="hover:text-slate-900 transition-colors">Privacy Policy</a></li>
+                <li><a href="/terms-of-service" className="hover:text-slate-900 transition-colors">Terms of Service</a></li>
+                <li><a href="/cookie-policy" className="hover:text-slate-900 transition-colors">Cookie Policy</a></li>
               </ul>
             </div>
             <div>
