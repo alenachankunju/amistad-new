@@ -271,7 +271,7 @@ export default function Home() {
             <div className="relative reveal delay-100 lg:h-[600px] w-full">
               {/* Composition of images for technical feel */}
               <div className="absolute top-0 right-0 w-4/5 h-4/5 bg-slate-900 rounded-sm overflow-hidden shadow-2xl z-10">
-                <Image src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=1997&auto=format&fit=crop" fill className="object-cover opacity-90 hover:scale-105 transition-transform duration-700" alt="Steel Structure" />
+                <Image src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=1997&auto=format&fit=crop" fill className="object-cover opacity-90 hover:scale-105 transition-transform duration-700" alt="Modern steel structure fabrication and construction in Doha, Qatar by Amistad Contracting" />
                 {/* Overlay Tech Data */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
                   <div className="flex justify-between items-end">
@@ -320,7 +320,7 @@ export default function Home() {
           <div className="grid md:grid-cols-12 gap-12 mb-24 items-center reveal">
             <div className="md:col-span-5 order-2 md:order-1">
               <div className="relative aspect-square md:aspect-[4/5] bg-slate-100 rounded-sm overflow-hidden group">
-                <Image src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1000&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="CAD Design" />
+                <Image src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1000&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Professional CAD design and engineering services for steel structures in Qatar" />
                 <div className="absolute inset-0 border border-black/5"></div>
               </div>
             </div>
@@ -403,7 +403,7 @@ export default function Home() {
             </div>
             <div className="md:col-span-5">
               <div className="relative aspect-square md:aspect-[4/5] bg-slate-100 rounded-sm overflow-hidden group">
-                <Image src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Welding" />
+                <Image src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=2070&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Certified welding and steel fabrication services by Amistad Contracting in Doha" />
                 <div className="absolute inset-0 border border-black/5"></div>
               </div>
             </div>
@@ -413,7 +413,7 @@ export default function Home() {
           <div className="grid md:grid-cols-12 gap-12 items-center reveal">
             <div className="md:col-span-5 order-2 md:order-1">
               <div className="relative aspect-square md:aspect-[4/5] bg-slate-100 rounded-sm overflow-hidden group">
-                <Image src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Construction Site" />
+                <Image src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" fill className="object-cover saturate-0 group-hover:saturate-100 transition-all duration-500" alt="Steel installation and rigging services on construction site in Qatar" />
                 <div className="absolute inset-0 border border-black/5"></div>
               </div>
             </div>

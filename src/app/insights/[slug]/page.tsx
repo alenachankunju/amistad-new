@@ -24,6 +24,9 @@ export async function generateMetadata(
         title: `${post.title} | Amistad Insights`,
         description: post.excerpt,
         keywords: post.keywords,
+        alternates: {
+            canonical: `https://amistadgeneral.net/insights/${post.slug}`,
+        },
         openGraph: {
             title: post.title,
             description: post.excerpt,
@@ -50,14 +53,17 @@ export default async function BlogPostPage({ params }: Props) {
         notFound();
     }
 
-    // JSON-LD Schema for Blog Posting
-    const jsonLd = {
+    // Enhanced JSON-LD Schema for Article
+    const articleSchema = {
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
+        "@type": "Article",
         "headline": post.title,
+        "description": post.excerpt,
         "image": post.image,
+        "datePublished": post.date,
+        "dateModified": post.date,
         "author": {
-            "@type": "Organization",
+            "@type": "Person",
             "name": post.author
         },
         "publisher": {
@@ -68,15 +74,19 @@ export default async function BlogPostPage({ params }: Props) {
                 "url": "https://amistadgeneral.net/amistad_logo.png"
             }
         },
-        "datePublished": post.date,
-        "description": post.excerpt
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://amistadgeneral.net/insights/${post.slug}`
+        },
+        "keywords": post.keywords.join(", "),
+        "articleSection": post.category
     };
 
     return (
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
             />
 
             {/* Navigation */}

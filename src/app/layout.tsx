@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   },
   description: "Amistad Contracting and Services - Professional engineering solutions in Doha, Qatar. Expert design, fabrication, and installation services for structural steel and metal works.",
   keywords: ["Steel Fabrication Qatar", "Structural Engineering Doha", "Metal Works Contractor", "Amistad Qatar", "Construction Services Doha"],
+  alternates: {
+    canonical: "https://amistadgeneral.net",
+  },
   authors: [{ name: "Amistad Contracting and Services" }],
   creator: "Amistad Contracting and Services",
   publisher: "Amistad Contracting and Services",
@@ -61,19 +64,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
+  // Enhanced structured data for better SEO
+  const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "ConstructionBusiness",
     "name": "Amistad Contracting and Services",
-    "image": "https://amistad.com.qa/amistad_logo.png",
-    "@id": "https://amistad.com.qa",
+    "alternateName": "Amistad Contracting",
+    "image": "https://amistadgeneral.net/amistad_logo.png",
+    "@id": "https://amistadgeneral.net",
     "url": "https://amistadgeneral.net",
+    "logo": "https://amistadgeneral.net/amistad_logo.png",
     "telephone": "+974 77070533",
     "email": "sales@amistadgeneral.net",
+    "description": "Professional engineering solutions in Doha, Qatar. Expert design, fabrication, and installation services for structural steel and metal works.",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Industrial Area",
       "addressLocality": "Doha",
+      "addressRegion": "Doha",
+      "postalCode": "",
       "addressCountry": "QA"
     },
     "geo": {
@@ -94,10 +103,36 @@ export default function RootLayout({
       "opens": "08:00",
       "closes": "18:00"
     },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Qatar"
+    },
+    "serviceType": [
+      "Structural Steel Fabrication",
+      "Metal Works",
+      "Steel Installation",
+      "Rigging Services",
+      "Engineering Design"
+    ],
     "sameAs": [
       "https://www.linkedin.com/company/amistad-contracting",
       "https://www.instagram.com/amistad.qa"
     ]
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Amistad Contracting and Services",
+    "url": "https://amistadgeneral.net",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://amistadgeneral.net/?s={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
   };
 
   return (
@@ -110,7 +145,11 @@ export default function RootLayout({
         <script src="https://unpkg.com/lucide@latest"></script>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
       <body className="bg-white text-slate-600 antialiased selection:bg-teal-600 selection:text-white">

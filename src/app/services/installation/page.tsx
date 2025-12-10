@@ -6,6 +6,9 @@ export const metadata: Metadata = {
     title: "Steel Installation & Rigging Services Qatar | Amistad Contracting",
     description: "Expert steel erection and rigging services in Qatar. Certified installation teams, comprehensive lift plans, and strict HSE compliance for safe project delivery.",
     keywords: ["Steel Installation", "Rigging Services", "Steel Erection Qatar", "Site Installation", "Crane Lifting", "Amistad Safety"],
+    alternates: {
+        canonical: "https://amistadgeneral.net/services/installation",
+    },
     openGraph: {
         title: "Steel Installation & Rigging Services Qatar | Amistad Contracting",
         description: "Expert steel erection and rigging services in Qatar. Certified installation teams.",
@@ -15,8 +18,32 @@ export const metadata: Metadata = {
 };
 
 export default function InstallationPage() {
+    const serviceSchema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Steel Installation & Rigging",
+        "provider": {
+            "@type": "ConstructionBusiness",
+            "name": "Amistad Contracting and Services",
+            "url": "https://amistadgeneral.net"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "Qatar"
+        },
+        "description": "Expert steel erection and rigging services in Qatar. Certified installation teams, comprehensive lift plans, and strict HSE compliance for safe project delivery.",
+        "offers": {
+            "@type": "Offer",
+            "description": "Steel installation and rigging services with certified riggers, lift planning, and HSE compliance to QCS 2014 / OSHA standards."
+        }
+    };
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
             {/* Navigation */}
             <nav className="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
                 <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
@@ -43,7 +70,7 @@ export default function InstallationPage() {
                 <div className="absolute inset-0">
                     <Image
                         src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop"
-                        alt="Steel Installation and Rigging"
+                        alt="Professional steel installation and rigging services on construction site in Qatar"
                         fill
                         className="object-cover opacity-30"
                     />

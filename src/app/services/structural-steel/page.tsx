@@ -6,6 +6,9 @@ export const metadata: Metadata = {
     title: "Structural Steel Fabrication Qatar | Amistad Contracting",
     description: "Premier structural steel fabrication services in Doha, Qatar. ISO-certified engineering, CNC precision, and heavy structural steel solutions for commercial and industrial projects.",
     keywords: ["Structural Steel", "Steel Fabrication Qatar", "Heavy Steel", "Beam Fabrication", "Amistad Engineering"],
+    alternates: {
+        canonical: "https://amistadgeneral.net/services/structural-steel",
+    },
     openGraph: {
         title: "Structural Steel Fabrication Qatar | Amistad Contracting",
         description: "Premier structural steel fabrication services in Doha, Qatar. ISO-certified engineering.",
@@ -15,8 +18,32 @@ export const metadata: Metadata = {
 };
 
 export default function StructuralSteelPage() {
+    const serviceSchema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Structural Steel Fabrication",
+        "provider": {
+            "@type": "ConstructionBusiness",
+            "name": "Amistad Contracting and Services",
+            "url": "https://amistadgeneral.net"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "Qatar"
+        },
+        "description": "Premier structural steel fabrication services in Doha, Qatar. ISO-certified engineering, CNC precision, and heavy structural steel solutions for commercial and industrial projects.",
+        "offers": {
+            "@type": "Offer",
+            "description": "Structural steel fabrication with monthly capacity of 450 tonnes, maximum beam length of 24 meters, CNC cutting, and AWS D1.1 / ISO 3834 welding standards."
+        }
+    };
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
             {/* Navigation */}
             <nav className="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
                 <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
@@ -43,7 +70,7 @@ export default function StructuralSteelPage() {
                 <div className="absolute inset-0">
                     <Image
                         src="https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=1997&auto=format&fit=crop"
-                        alt="Structural Steel Fabrication"
+                        alt="Structural steel fabrication facility in Doha, Qatar - Heavy steel beams and columns production"
                         fill
                         className="object-cover opacity-30"
                     />

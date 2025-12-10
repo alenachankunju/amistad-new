@@ -6,6 +6,9 @@ export const metadata: Metadata = {
     title: "Architectural Metal Works Doha | Amistad Contracting",
     description: "Custom architectural metal works in Qatar. Specializing in stainless steel staircases, glass balustrades, decorative screens, and luxury metal fabrication.",
     keywords: ["Metal Works", "Architectural Steel", "Staircases Doha", "Balustrades Qatar", "Stainless Steel Fabrication", "Amistad Qatar"],
+    alternates: {
+        canonical: "https://amistadgeneral.net/services/metal-works",
+    },
     openGraph: {
         title: "Architectural Metal Works Doha | Amistad Contracting",
         description: "Custom architectural metal works in Qatar. Specializing in luxury metal fabrication.",
@@ -15,8 +18,32 @@ export const metadata: Metadata = {
 };
 
 export default function MetalWorksPage() {
+    const serviceSchema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Architectural Metal Works",
+        "provider": {
+            "@type": "ConstructionBusiness",
+            "name": "Amistad Contracting and Services",
+            "url": "https://amistadgeneral.net"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "Qatar"
+        },
+        "description": "Custom architectural metal works in Qatar. Specializing in stainless steel staircases, glass balustrades, decorative screens, and luxury metal fabrication.",
+        "offers": {
+            "@type": "Offer",
+            "description": "Architectural metal works including stainless steel fabrication, decorative elements, staircases, and custom metal designs."
+        }
+    };
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+            />
             {/* Navigation */}
             <nav className="fixed w-full z-50 top-0 start-0 border-b border-slate-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
                 <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-4">
@@ -43,7 +70,7 @@ export default function MetalWorksPage() {
                 <div className="absolute inset-0">
                     <Image
                         src="https://images.unsplash.com/photo-1558402347-1736bb7f512c?q=80&w=2070&auto=format&fit=crop"
-                        alt="Architectural Metal Works"
+                        alt="Architectural metal works and custom stainless steel fabrication in Doha, Qatar"
                         fill
                         className="object-cover opacity-30"
                     />
